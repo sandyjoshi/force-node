@@ -16,7 +16,43 @@ function preload() {
     game.load.spritesheet('veggies', './assets/images/fruits_dummy.png',32,32);
 }
 
-var slashes , points = [], line, fruits, scoreLabel, score = 0 ;
+
+var startGame = true ;
+
+var slashes , points = [], line, fruits, scoreLabel, score = 0 , match = 0 ;
+
+var match_center , mobile_point = { x : 0 , y : 0 } , match_top_right , match_bottom_right , match_bottom_left , match_top_left ;
+
+var point_top_right , point_top_left , point_bottom_left , point_bottom_right ;
+
+function setCordinate( ){
+
+	if( match == 0 ){
+		match_top_right = mobile_point ;
+	}
+	else if( match == 1 ){
+		match_bottom_right = mobile_point ;
+	}
+	else if( match == 2 ){
+		match_bottom_left = mobile_point ;
+	}
+	else if( match == 3 ){
+		match_top_left = mobile_point ;
+		startGame = true ;
+		update();
+	}
+	match ++ ;
+}
+
+game.setCordinate = setCordinate ;
+
+function setData(data){
+	mobile_point = { x : data.coord_x , y : data.coord_y } ;
+	console.log( "point x : " + data.coord_x ) ;
+	console.log( "point y : " + data.coord_y ) ;
+}
+
+game.setData = setData ;
 
 function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -33,18 +69,27 @@ function create() {
     emitter.gravity = 150;
     emitter.bounce.setTo(0.5, 0.5);
     emitter.angularDrag = 50;
-    // start(explode, lifespan, frequency, quantity, forceQuantity)
-    emitter.start(false, 8000, 400);
+    // emitter.start(false, 8000, 400);
 	slashes = game.add.graphics(0, 0);
 
-	scoreLabel = game.add.text(10,10,'Tip: Start from here!');
+	point_top_right = new Phaser.Circle( width - 50 , 50 , 50);
+	point_top_left = new Phaser.Circle( 50 , 50 , 50);
+	point_bottom_left = new Phaser.Circle( 50 , height - 50 , 50);
+	point_bottom_right = new Phaser.Circle( width - 50 , height - 50 , 50);
+
+	scoreLabel = game.add.text(10,10,'Please follow the DOT to get started');
 	scoreLabel.fill = 'white';
 }
 
 function update() {
+
+	if ( !startGame ){
+		return;
+	}
+
 	points.push({
-		x: game.input.x,
-		y: game.input.y
+		x: mobile_point.x ,
+		y: mobile_point.y
 	});
 	points = points.splice(points.length-10, points.length);
 
@@ -52,8 +97,6 @@ function update() {
         return;
     }
 
-
-	slashes.clear();
 	slashes.beginFill(0xFFFFFF);
 	slashes.alpha = .5;
 	slashes.moveTo(points[0].x, points[0].y);
@@ -93,6 +136,22 @@ function checkIntersects(fruit) {
         emitter.gravity = -650;
         emitter.start(true, 400, 30, 1);
         updateScore(fruit);
+	}
+}
+
+function render() {
+	if( match == 0 ){
+		game.debug.geom(point_top_right,'#cfffff');
+	}
+	else if( match == 1 ){
+		scoreLabel.text = "" ;
+		game.debug.geom(point_bottom_right,'#cfffff');
+	}
+	else if( match == 2 ){
+		game.debug.geom(point_bottom_left,'#cfffff');
+	}
+	else if( match == 3 ){
+		game.debug.geom(point_top_left,'#cfffff');
 	}
 }
 

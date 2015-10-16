@@ -11,7 +11,14 @@ var hinge = new Hinge({
         App.route("game");
     },
     onDeviceData: function(data) {
-		console.log(data);
+
+    	if( data.event && data.event == "shake" ){
+			game.setCordinate(data) ;
+    	}
+    	else{
+			game.setData(data) ;
+    	}
+
     }
 });
 
