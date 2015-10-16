@@ -117,7 +117,13 @@ Hinge.prototype.startDeviceServer = function() {
 
         // Handle incoming messages from clients.
         socket.on('data', function (data) {
-            hinge.onDeviceData(JSON.parse(data.toString()));
+            try{
+                console.log( "ipc : " );
+                console.log( data.toString() );
+                hinge.onDeviceData(JSON.parse(data.toString()));
+            }
+            catch(err) {
+            }
         });
 
         // Remove the client from the list when it leaves
