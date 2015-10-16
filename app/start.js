@@ -18,7 +18,7 @@ hinge.qrCode(function(err, qr){
 });
 
 App.onReady = function() {
-    // hinge.startDeviceServer();
-    App.route("game");
+    hinge.startDeviceServer();
+    // App.route("game");
 };
 App.init();
