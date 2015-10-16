@@ -4,6 +4,7 @@ var net = require('net');
 var _ = require('lodash');
 var Peer = rootRequire('hinge/peer');
 var Device = rootRequire('hinge/device');
+var ipc = require('ipc');
 
 function Hinge (opts) {
     this.opts = opts || {};
@@ -30,6 +31,7 @@ function Hinge (opts) {
     this.onMingle = this.opts.onMingle || _.identity;
     this.onPeerConnect = this.opts.onPeerConnect || _.identity;
     this.onDeviceConnect = this.opts.onDeviceConnect || _.identity;
+    this.onDeviceData = this.opts.onDeviceData || _.identity;
 
     // bind `this`
     this.startMingling = this.startMingling.bind(this);
@@ -38,12 +40,14 @@ function Hinge (opts) {
     this.onMingle = this.onMingle.bind(this);
     this.onPeerConnect = this.onPeerConnect.bind(this);
     this.onDeviceConnect = this.onDeviceConnect.bind(this);
+    this.onDeviceData = this.onDeviceData.bind(this);
 }
 
 Hinge.prototype.constructor = Hinge;
 Hinge.prototype.qrCode = function(callback) {
     if (!callback) return;
     require('dns').lookup(require('os').hostname(), function (err, add, fam) {
+        console.log(add, this.tcpDevicePort);
         callback(err, qr.imageSync(add + ":" + this.tcpDevicePort, { type: 'svg' }));
     }.bind(this));
 }
@@ -103,6 +107,8 @@ Hinge.prototype._startMingling = function(){
 }
 
 Hinge.prototype.startDeviceServer = function() {
+    var hinge = this;
+
     // Start a TCP Server
     net.createServer(function (socket) {
         var device = this.device = new Device(socket.remoteAddress, socket.remotePort);
@@ -111,7 +117,7 @@ Hinge.prototype.startDeviceServer = function() {
 
         // Handle incoming messages from clients.
         socket.on('data', function (data) {
-            // on data
+            hinge.onDeviceData(JSON.parse(data.toString()));
         });
 
         // Remove the client from the list when it leaves
