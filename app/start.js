@@ -2,7 +2,7 @@ var remote = require('remote');
 var app = remote.require('app');
 var $ = require("jquery");
 var App = require('./app');
-var phasor = require("phasor");
+var phasor = remote.require("phasor");
 
 var Hinge = remote.getGlobal("rootRequire")("hinge");
 var hinge = new Hinge({
