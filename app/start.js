@@ -20,6 +20,3 @@ App.onReady = function() {
     // hinge.startDeviceServer();
 };
 App.init();
-
-// opening sequence
-$(".os-phrases > h2").lettering('words').children("span").lettering().children("span").lettering();
