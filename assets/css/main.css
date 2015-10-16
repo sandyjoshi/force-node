@@ -1,0 +1,53 @@
+.md-18 { font-size: 18px; }
+.md-24 { font-size: 24px; }
+.md-36 { font-size: 36px; }
+.md-48 { font-size: 48px; }
+.md-64 { font-size: 64px; }
+.md-72 { font-size: 72px; }
+
+.hide {
+    display: none;
+}
+
+.screen {
+    position: fixed;
+    width:100%;
+    height:100%;
+    top: 0;
+    left: 0;
+}
+
+.glass {
+    background: url(../images/splash-image.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    position: fixed;
+    width:100%;
+    height:100%;
+    top: 0;
+    left: 0;
+    -webkit-filter: blur(5px) saturate(0);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+}
+
+.splash-waiting {
+    position: relative;
+    margin: 0 auto;
+    top: 65%;
+    height: 100px;
+    width: 100px;
+    background-image: url(../images/waiting.svg);
+}
+
+.qr-code {
+    position: relative;
+    margin: 0 auto;
+    top: 65%;
+    height: 200px;
+    width: 200px;
+}

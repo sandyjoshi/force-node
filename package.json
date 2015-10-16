@@ -1,0 +1,33 @@
+{
+  "name": "force-node",
+  "version": "1.0.0",
+  "description": "Multiplayer game",
+  "main": "main.js",
+  "productName": "Force",
+  "electronVersion": "0.33.7",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/.bin/electron .",
+    "build": "./node_modules/.bin/electron-packager . $npm_package_productName --out=dist --ignore='^/dist$' --prune --asar --all --version=$npm_package_electronVersion"
+  },
+  "keywords": [
+    "game",
+    "network",
+    "tcp"
+  ],
+  "author": "Jaynti Kanani",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^2.1.4",
+    "lodash": "^3.10.1",
+    "qr-image": "^3.1.0",
+    "skeleton-css": "^2.0.4"
+  },
+  "devDependencies": {
+    "electron-packager": "^5.1.0",
+    "electron-prebuilt": "^0.33.7",
+    "gulp": "^3.9.0",
+    "gulp-run": "^1.6.11",
+    "gulp-util": "^3.0.6"
+  }
+}

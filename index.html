@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Force</title>
+    <link rel="stylesheet" href="./node_modules/skeleton-css/css/normalize.css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="./node_modules/skeleton-css/css/skeleton.css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="./assets/css/main.css" type="text/css" media="screen" charset="utf-8">
+  </head>
+  <body>
+    <div class="start-container">
+      <div class="glass"></div>
+      <div class="screen mingle-screen">
+        <div class="qr-code">
+        </div>
+      </div>
+    </div>
+    <div class="game-container hide">
+      Connected! Game started!
+    </div>
+  </body>
+  <script>
+  if (typeof require !== 'function') {
+  } else {
+    // If we are in the electron env
+    require('./app/start.js')()
+  }
+  </script>
+</html>
