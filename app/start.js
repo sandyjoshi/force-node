@@ -11,6 +11,7 @@ var hinge = new Hinge({
     },
     onDeviceData: function(data) {
 		console.log(data);
+		Game.sendData(data);
     }
 
 
@@ -22,6 +23,6 @@ hinge.qrCode(function(err, qr){
 });
 
 App.onReady = function() {
-    // hinge.startDeviceServer();
+    hinge.startDeviceServer();
 };
 App.init();

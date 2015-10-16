@@ -1,6 +1,5 @@
 var $ = require("jquery");
 var remote = require("remote");
-var game = require("./game/game");
 
 var App = {
     onReady: null,
