@@ -8,7 +8,12 @@ var hinge = new Hinge({
     groupLeader: true,
     onDeviceConnect: function(){
         App.route("game");
+    },
+    onDeviceData: function(data) {
+		console.log(data);
     }
+
+
 });
 
 // Add qr code

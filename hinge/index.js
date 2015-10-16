@@ -4,12 +4,13 @@ var net = require('net');
 var _ = require('lodash');
 var Peer = rootRequire('hinge/peer');
 var Device = rootRequire('hinge/device');
+var ipc = require('ipc');
 
-function Hinge (opts) {
+function Hinge(opts) {
     this.opts = opts || {};
 
     // Groupd leader
-    this.groupLeader = !!this.opts.groupLeader;
+    this.groupLeader = !! this.opts.groupLeader;
 
     // broadcast port
     this.broadcastHost = this.opts.broadcastHost || "255.255.255.255";
@@ -30,6 +31,7 @@ function Hinge (opts) {
     this.onMingle = this.opts.onMingle || _.identity;
     this.onPeerConnect = this.opts.onPeerConnect || _.identity;
     this.onDeviceConnect = this.opts.onDeviceConnect || _.identity;
+    this.onDeviceData = this.opts.onDeviceData || _.identity;
 
     // bind `this`
     this.startMingling = this.startMingling.bind(this);
@@ -38,24 +40,28 @@ function Hinge (opts) {
     this.onMingle = this.onMingle.bind(this);
     this.onPeerConnect = this.onPeerConnect.bind(this);
     this.onDeviceConnect = this.onDeviceConnect.bind(this);
+    this.onDeviceData = this.onDeviceData.bind(this);
 }
 
 Hinge.prototype.constructor = Hinge;
 Hinge.prototype.qrCode = function(callback) {
     if (!callback) return;
-    require('dns').lookup(require('os').hostname(), function (err, add, fam) {
-        callback(err, qr.imageSync(add + ":" + this.tcpDevicePort, { type: 'svg' }));
+    require('dns').lookup(require('os').hostname(), function(err, add, fam) {
+        console.log(add, this.tcpDevicePort);
+        callback(err, qr.imageSync(add + ":" + this.tcpDevicePort, {
+            type: 'svg'
+        }));
     }.bind(this));
 }
 
 Hinge.prototype.startMingling = function() {
     this.udpSocket && this.stopMingling();
     this.udpSocket = dgram.createSocket("udp4");
-    this.udpSocket.on('listening', function(){
+    this.udpSocket.on('listening', function() {
         console.log("Listening on port " + this.broadcastPort);
         this.udpSocket.setBroadcast(true);
     }.bind(this));
-    this.udpSocket.on('message', function (message, rinfo) {
+    this.udpSocket.on('message', function(message, rinfo) {
         var data = JSON.parse(message.toString());
         if (data.mingle) {
             if (this.groupLeader) {
@@ -79,14 +85,14 @@ Hinge.prototype.startMingling = function() {
     setTimeout(this.stopMingling, this.broadcastTimeout);
 }
 
-Hinge.prototype.stopMingling = function(){
+Hinge.prototype.stopMingling = function() {
     this.udpSocket && this.udpSocket.close();
     this.udpSocket = null;
     clearTimeout(this._startMingling.timeout);
     this.onMingle();
 }
 
-Hinge.prototype._startMingling = function(){
+Hinge.prototype._startMingling = function() {
     clearTimeout(this._startMingling.timeout);
     if (!this.udpSocket) return;
 
@@ -103,19 +109,25 @@ Hinge.prototype._startMingling = function(){
 }
 
 Hinge.prototype.startDeviceServer = function() {
+    var hinge = this;
+
     // Start a TCP Server
-    net.createServer(function (socket) {
+    net.createServer(function(socket) {
         var device = this.device = new Device(socket.remoteAddress, socket.remotePort);
         device.socket = socket;
         device.name = socket.remoteAddress + ":" + socket.remotePort;
 
         // Handle incoming messages from clients.
-        socket.on('data', function (data) {
-            // on data
+        socket.on('data', function(data) {
+            try {
+                console.log("ipc : ");
+                console.log(data.toString());
+                hinge.onDeviceData(JSON.parse(data.toString()));
+            } catch (err) {}
         });
 
         // Remove the client from the list when it leaves
-        socket.on('end', function () {
+        socket.on('end', function() {
             device.socket = null;
         });
 
@@ -129,19 +141,19 @@ Hinge.prototype.startDeviceServer = function() {
 
 Hinge.prototype.startPeerServer = function() {
     // Start a TCP Server
-    net.createServer(function (socket) {
+    net.createServer(function(socket) {
         var peer = this.peer = new Peer(socket.remoteAddress, socket.remotePort);
         peer.socket = socket;
         peer.name = socket.remoteAddress + ":" + socket.remotePort;
 
         // Handle incoming messages from clients.
-        socket.on('data', function (data) {
+        socket.on('data', function(data) {
             // on data
         });
 
         // Remove the client from the list when it leaves
-        socket.on('end', function () {
-           peer.socket = null;
+        socket.on('end', function() {
+            peer.socket = null;
         });
 
         // on peer connect

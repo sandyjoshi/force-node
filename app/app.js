@@ -7,8 +7,8 @@ var App = {
 
     // route to screen
     route: function(screen) {
-        $(".screen").addClass("hide");
-        $("." + screen + "-screen").removeClass("hide");
+        $(".container").addClass("hide");
+        $("." + screen + "-container").removeClass("hide");
     },
 
     // init
