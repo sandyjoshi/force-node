@@ -75,7 +75,7 @@ function checkIntersects(fruit) {
 		if (Phaser.Point.distance(contactPoint, new Phaser.Point(fruit.x, fruit.y)) > 110) {
 			return;
 		}
-
+        fruit.kill();
         updateScore(fruit);
 
 	}
@@ -86,10 +86,6 @@ function render() {
 
 
 function updateScore(fruit) {
-	emitter.x = fruit.x;
-	emitter.y = fruit.y;
-	emitter.start(true, 2000, null, 4);
-    fruit.kill();
 	points = [];
 	score++;
 	scoreLabel.text = 'Score: ' + score;
