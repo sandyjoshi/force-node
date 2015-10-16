@@ -1,5 +1,5 @@
 var snake, apple, squareSize, score, speed,
-    updateDelay, direction, new_direction,
+    updateDelay, direction = "right", new_direction,
     addNew, cursors, scoreTextValue, speedTextValue, textStyle_Key, textStyle_Value;
 
 var width = screen.width;
@@ -16,22 +16,22 @@ var Game = {
 
     sendData : function(data){
 
-        if (data.isright )
+        if (data.isright && direction != 'left' )
         {
             new_direction = 'right';
             console.log("is right");
         }
-        else if (data.isleft )
+        else if (data.isleft && direction != 'right' )
         {
             new_direction = 'left';
              console.log("is left")
         }
-        else if (data.istop )
+        else if (data.istop && direction != 'down')
         {
             new_direction = 'up';
              console.log("is top")
         }
-        else if (data.isbottom )
+        else if (data.isbottom && direction != 'top')
         {
             new_direction = 'down';
             console.log("is down")
@@ -58,7 +58,7 @@ var Game = {
         // Set up a Phaser controller for keyboard input.
         cursors = game.input.keyboard.createCursorKeys();
 
-        game.stage.backgroundColor = '#061f27';
+        game.stage.backgroundColor = '#124184';
 
         // Generate the initial snake stack. Our snake will be 10 elements long.
         for(var i = 0; i < 10; i++){
@@ -88,9 +88,13 @@ var Game = {
 
         // A formula to calculate game speed based on the score.
         // The higher the score, the higher the game speed, with a maximum of 10;
-        speed = Math.min(10, Math.floor(score/5));
-        // speed = 5;
+        // speed = Math.min(1, Math.floor(score/5));
+        speed = 1;
         // Update speed value on game screen.
+        //
+        if( !speedTextValue ){
+            return;
+        }
         speedTextValue.text = '' + speed;
 
         // Since the update function of Phaser has an update rate of around 60 FPS,
@@ -113,7 +117,7 @@ var Game = {
                 oldLastCelly = lastCell.y;
 
             // If a new direction has been chosen from the keyboard, make it the direction of the snake now.
-            if(new_direction){
+            if(new_direction && new_direction != direction){
                 direction = new_direction;
                 new_direction = null;
             }
