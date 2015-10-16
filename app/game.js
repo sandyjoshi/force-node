@@ -17,26 +17,22 @@ function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
     var background = game.add.sprite(0,0,'background');
     background.scale.y = 2;
-
     emitter = game.add.emitter(game.world.centerX, 0, 250);
     fruits = emitter.makeParticles('veggies', [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], 200, true, true);
+    emitter.minParticleScale = 3;
     emitter.minParticleSpeed.setTo(-200, -300);
     emitter.maxParticleSpeed.setTo(200, -400);
     emitter.gravity = 150;
     emitter.bounce.setTo(0.5, 0.5);
-    emitter.angularDrag = 30;
+    emitter.angularDrag = 50;
     emitter.start(false, 8000, 400);
-
 	slashes = game.add.graphics(0, 0);
 
 	scoreLabel = game.add.text(10,10,'Tip: Start from here!');
 	scoreLabel.fill = 'white';
 
-
 }
-
 function update() {
-
 	points.push({
 		x: game.input.x,
 		y: game.input.y
@@ -53,7 +49,7 @@ function update() {
 	slashes.alpha = .5;
 	slashes.moveTo(points[0].x, points[0].y);
 	for (var i=1; i<points.length; i++) {
-	slashes.lineTo(points[i].x, points[i].y);
+	   slashes.lineTo(points[i].x, points[i].y);
 	}
 	slashes.endFill();
 
