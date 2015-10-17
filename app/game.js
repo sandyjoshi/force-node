@@ -75,7 +75,7 @@ var Game = {
         }
 
         // Genereate the first apple.
-        for(var i = 0; i<50; i++) {
+        for(var i = 0; i<100; i++) {
             this.generateApple();
         }
         // Add Text to top of game.
