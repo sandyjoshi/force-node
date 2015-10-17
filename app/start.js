@@ -15,7 +15,6 @@ var hinge = new Hinge({
 		Game.sendData(data);
     }
 
-
 });
 
 // Add qr code

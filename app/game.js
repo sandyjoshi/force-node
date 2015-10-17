@@ -231,13 +231,15 @@ var Game = {
 
         // Check if the head of the snake is in the boundaries of the game field.
 
-        if(head.x >= width || head.x < 0 || head.y >= height || head.y < 0){
-
-
-            // If it's not in, we've hit a wall. Go to game over screen.
-            game.state.start('Game_Over');
-        }
-
+        if (head.x >= width) {
+           snake[snake.length - 1].x = 0;
+       } else if(head.x < 0) {
+           snake[snake.length - 1].x = width;
+       } else if (head.y >= height) {
+           snake[snake.length - 1].y = 0;
+       } else if (head.y < 0){
+           snake[snake.length - 1].y = height;
+       }
     }
 
 };
