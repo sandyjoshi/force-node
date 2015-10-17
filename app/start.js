@@ -8,6 +8,7 @@ var hinge = new Hinge({
     groupLeader: true,
     onDeviceConnect: function(){
         App.route("game");
+        game.state.start('Game');
     },
     onDeviceData: function(data) {
 		console.log(data);
