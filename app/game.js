@@ -95,7 +95,7 @@ var Game = {
 
         // A formula to calculate game speed based on the score.
         // The higher the score, the higher the game speed, with a maximum of 10;
-        speed = Math.max(2, Math.floor(score/10));
+        speed = Math.max(1, Math.floor(score/10));
         game.physics.arcade.overlap(snake,apples,this.collidedWithApple,null,this);
         // speed = 1;
         // Update speed value on game screen.
@@ -205,16 +205,11 @@ var Game = {
 
     },
     wallCollision: function(head) {
-        // Check if the head of the snake is in the boundaries of the game field.
-        if (head.x >= width) {
-           snake[snake.length - 1].x = 0;
-       } else if(head.x < 0) {
-           snake[snake.length - 1].x = width;
-       } else if (head.y >= height) {
-           snake[snake.length - 1].y = 0;
-       } else if (head.y < 0){
-           snake[snake.length - 1].y = height;
+        if(head.x >= width || head.x < 0 || head.y >= height || head.y < 0){
+            // If it's not in, we've hit a wall. Go to game over screen.
+            game.state.start('Game_Over');
        }
+
     }
 
 };
