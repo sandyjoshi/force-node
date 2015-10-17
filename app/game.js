@@ -2,8 +2,8 @@ var snake, apple, squareSize, score, speed,
     updateDelay, direction = "right", new_direction,
     addNew, cursors, scoreTextValue, speedTextValue, textStyle_Key, textStyle_Value;
 
-var width = screen.width;
-var height = screen.height;
+var width = screen.width - 50;
+var height = screen.height - 50;
 
 var Game = {
 
