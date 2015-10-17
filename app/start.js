@@ -18,8 +18,11 @@ var hinge = new Hinge({
             console.log(data);
             Game.sendData(data);
         }
+    },
+    onDeviceDisconnect: function() {
+        console.log('Disconnected');
+        App.route("start");
     }
-
 });
 
 // Add qr code

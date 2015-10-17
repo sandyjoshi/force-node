@@ -32,6 +32,7 @@ function Hinge(opts) {
     this.onPeerConnect = this.opts.onPeerConnect || _.identity;
     this.onDeviceConnect = this.opts.onDeviceConnect || _.identity;
     this.onDeviceData = this.opts.onDeviceData || _.identity;
+    this.onDeviceDisconnect = this.opts.onDeviceDisconnect || _.identity;
 
     // bind `this`
     this.startMingling = this.startMingling.bind(this);
@@ -40,6 +41,7 @@ function Hinge(opts) {
     this.onMingle = this.onMingle.bind(this);
     this.onPeerConnect = this.onPeerConnect.bind(this);
     this.onDeviceConnect = this.onDeviceConnect.bind(this);
+    this.onDeviceDisconnect = this.onDeviceDisconnect.bind(this);
     this.onDeviceData = this.onDeviceData.bind(this);
 }
 
@@ -129,6 +131,8 @@ Hinge.prototype.startDeviceServer = function() {
         // Remove the client from the list when it leaves
         socket.on('end', function() {
             device.socket = null;
+            console.log('Connection closed');
+            hinge.onDeviceDisconnect(device);
         });
 
         // on device connect
@@ -180,7 +184,6 @@ Hinge.prototype.connect = function(host, port) {
     });
 
     client.on('close', function() {
-        console.log('Connection closed');
         peer.socket = null;
     });
 }
