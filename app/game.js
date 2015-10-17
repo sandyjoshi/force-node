@@ -230,7 +230,6 @@ var Game = {
     wallCollision: function(head) {
 
         // Check if the head of the snake is in the boundaries of the game field.
-
         if (head.x >= width) {
            snake[snake.length - 1].x = 0;
        } else if(head.x < 0) {

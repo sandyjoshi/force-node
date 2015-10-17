@@ -11,8 +11,13 @@ var hinge = new Hinge({
         game.state.start('Game');
     },
     onDeviceData: function(data) {
-		console.log(data);
-		Game.sendData(data);
+        if( data.event == "replay"){
+            game.state.start('Game');
+        }
+        else{
+            console.log(data);
+            Game.sendData(data);
+        }
     }
 
 });
