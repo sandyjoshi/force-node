@@ -2,10 +2,10 @@ var snake, apple, squareSize, score, speed,
     updateDelay, direction = "right", new_direction,
     addNew, cursors, scoreTextValue, speedTextValue, textStyle_Key, textStyle_Value;
 
-var width = screen.width  ;
-var height = screen.height;
+var width = screen.width-40;
+var height = screen.height-40;
 
-var apples;
+var apples,kill_music,start_sound;
 
 var Game = {
 
@@ -14,6 +14,8 @@ var Game = {
         // In our case, that's just two squares - one for the snake body and one for the apple.
         game.load.image('snake', './assets/images/snake.png');
         game.load.image('apple', './assets/images/apple.png');
+        game.load.audio('kill_music', './assets/music/p-ping.mp3');
+        game.load.audio('start_sound', './assets/music/tommy_in_goa.mp3');
     },
 
     sendData : function(data){
@@ -46,6 +48,8 @@ var Game = {
 
         //Add physics for collision
         game.physics.startSystem(Phaser.Physics.ARCADE);
+        start_sound = game.add.audio('start_sound');
+        start_sound.play();
 
         // By setting up global variables in the create function, we initialise them on game start.
         // We need them to be globally available so that the update function can alter them.
@@ -75,7 +79,7 @@ var Game = {
         }
 
         // Genereate the first apple.
-        for(var i = 0; i<100; i++) {
+        for(var i = 0; i<200; i++) {
             this.generateApple();
         }
         // Add Text to top of game.
@@ -187,10 +191,13 @@ var Game = {
     collidedWithApple: function(snake,apple) {
         addNew = true;
         apple.kill();
+        start_sound.mute = true;
+        kill_music = game.add.audio('kill_music');
+        kill_music.play();
         this.generateApple();
         score++;
         scoreTextValue.text = score.toString();
-
+        start_sound.mute = false;
     },
 
     selfCollision: function(head) {
@@ -212,6 +219,7 @@ var Game = {
         if(head.x >= width || head.x < 0 || head.y >= height || head.y < 0){
             // If it's not in, we've hit a wall. Go to game over screen.
             game.state.start('Game_Over');
+            start_sound.mute = true;
        }
 
     }

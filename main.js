@@ -38,9 +38,9 @@ app.on('ready', function() {
 
     // Open the DevTools.
     if (process.env.NODE_ENV != "production") {
-        mainWindow.openDevTools();
+        // mainWindow.openDevTools();
     } else {
-        // mainWindow.setFullScreen(true);
+        mainWindow.setFullScreen(true);
     }
 
     // Emitted when the window is closed.
