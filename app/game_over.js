@@ -16,8 +16,10 @@ var Game_Over = {
         game.stage.backgroundColor = '#000000';
 
         // Last Score Info.
-        game.add.text(width/2 -200 , height/2 - 200, "Game Over, Good Bye.", { font: "bold 36px sans-serif", fill: "#46c0f9", align: "center"});
-        game.add.text(width/2 - 100 , height/2 - 150 , "Score : " + score.toString(), { font: "bold 36px sans-serif", fill: "#46c0f9", align: "center" });
+        //
+        game.add.text(width/2 -100 , height/2 - 200, "Game Over", { font: "bold 36px sans-serif", fill: "#46c0f9", align: "center"});
+        game.add.text(width/2 - 225 , height/2 - 150 , "Click Replay on your device.", { font: "bold 36px sans-serif", fill: "#46c0f9", align: "center" });
+        game.add.text(width/2 - 100 , height/2 - 100 , " Score : " + score.toString(), { font: "bold 36px sans-serif", fill: "#46c0f9", align: "center" });
 
 
     },

@@ -199,6 +199,10 @@ var Game = {
             if(head.x == snake[i].x && head.y == snake[i].y){
                 // If so, go to game over screen.
                 console.log(" killing point ");
+                console.log(" head x : " + head.x );
+                console.log(" head y : " + head.y );
+                console.log(" snake x : " + snake[i].x );
+                console.log(" snake y : " + snake[i].y );
                 game.state.start('Game_Over');
             }
         }
