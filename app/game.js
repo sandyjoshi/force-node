@@ -63,7 +63,7 @@ var Game = {
         // Set up a Phaser controller for keyboard input.
         cursors = game.input.keyboard.createCursorKeys();
 
-        game.stage.backgroundColor = '#124184';
+        game.stage.backgroundColor = '#000000';
 
         apples = game.add.group();
         apples.enableBody = true;
@@ -95,7 +95,7 @@ var Game = {
 
         // A formula to calculate game speed based on the score.
         // The higher the score, the higher the game speed, with a maximum of 10;
-        speed = Math.max(1, Math.floor(score/10));
+        speed = Math.max(1, Math.floor(score/20));
         game.physics.arcade.overlap(snake,apples,this.collidedWithApple,null,this);
         // speed = 1;
         // Update speed value on game screen.
