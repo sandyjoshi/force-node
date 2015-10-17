@@ -161,7 +161,7 @@ var Game = {
                 addNew = false;
             }
 
-            this.selfCollision(firstCell);
+            // this.selfCollision(firstCell);
 
             // Check with collision with wall. Parameter is the head of the snake.
             this.wallCollision(firstCell);
