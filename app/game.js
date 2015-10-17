@@ -88,8 +88,7 @@ var Game = {
 
         // A formula to calculate game speed based on the score.
         // The higher the score, the higher the game speed, with a maximum of 10;
-        // speed = Math.min(1, Math.floor(score/5));
-        speed = 1;
+        speed = Math.min(10, Math.floor(score/5));
         // Update speed value on game screen.
         //
         if( !speedTextValue ){
