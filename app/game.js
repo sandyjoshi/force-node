@@ -2,7 +2,7 @@ var snake, apple, squareSize, score, speed,
     updateDelay, direction = "right", new_direction,
     addNew, cursors, scoreTextValue, speedTextValue, textStyle_Key, textStyle_Value;
 
-var width = screen.width ;
+var width = screen.width  ;
 var height = screen.height;
 
 var apples;
@@ -176,8 +176,8 @@ var Game = {
         // X is between 0 and 585 (39*15)
         // Y is between 0 and 435 (29*15)
 
-        var randomX = Math.floor(Math.random() * width/20 ) * squareSize,
-            randomY = Math.floor(Math.random() * height/20 ) * squareSize;
+        var randomX = Math.floor(Math.random() * width/10 ) * squareSize,
+            randomY = Math.floor(Math.random() * height/10 ) * squareSize;
 
         // Add a new apple.
         apple = apples.create(randomX,randomY,'apple')

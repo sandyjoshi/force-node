@@ -2,7 +2,7 @@ var game;
 var width = screen.width;
 var height = screen.height;
 
-game = new Phaser.Game(width, height, Phaser.AUTO, '');
+game = new Phaser.Game(width , height, Phaser.AUTO, '');
 
 game.state.add('Menu', Menu);
 game.state.add('Game', Game);
