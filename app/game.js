@@ -2,8 +2,8 @@ var snake, apple, squareSize, score, speed,
     updateDelay, direction = "right", new_direction,
     addNew, cursors, scoreTextValue, speedTextValue, textStyle_Key, textStyle_Value;
 
-var width = screen.width - 50;
-var height = screen.height - 50;
+var width = screen.width ;
+var height = screen.height;
 
 var apples;
 
@@ -75,7 +75,7 @@ var Game = {
         }
 
         // Genereate the first apple.
-        for(var i = 0; i<20; i++) {
+        for(var i = 0; i<50; i++) {
             this.generateApple();
         }
         // Add Text to top of game.
@@ -95,9 +95,9 @@ var Game = {
 
         // A formula to calculate game speed based on the score.
         // The higher the score, the higher the game speed, with a maximum of 10;
-        // speed = Math.min(1, Math.floor(score/5));
+        speed = Math.max(2, Math.floor(score/10));
         game.physics.arcade.overlap(snake,apples,this.collidedWithApple,null,this);
-        speed = 1;
+        // speed = 1;
         // Update speed value on game screen.
         if( !speedTextValue ){
             return;
@@ -198,6 +198,7 @@ var Game = {
         for(var i = 0; i < snake.length - 1; i++){
             if(head.x == snake[i].x && head.y == snake[i].y){
                 // If so, go to game over screen.
+                console.log(" killing point ");
                 game.state.start('Game_Over');
             }
         }
