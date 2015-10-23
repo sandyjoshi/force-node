@@ -99,7 +99,7 @@ var Game = {
 
         // A formula to calculate game speed based on the score.
         // The higher the score, the higher the game speed, with a maximum of 10;
-        speed = Math.max(1, Math.floor(score/20));
+        speed = Math.min(10, Math.floor(score/3));
         game.physics.arcade.overlap(snake,apples,this.collidedWithApple,null,this);
         // speed = 1;
         // Update speed value on game screen.
